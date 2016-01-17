@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,6 +22,12 @@ namespace DivideLibros
         {
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.ShowDialog();
+            if (!String.IsNullOrEmpty(ofd.FileName))
+            {
+                string nombreFichero = ofd.FileName;
+                FileInfo fichero = new FileInfo(nombreFichero);
+                this.textBoxFichero.Text = fichero.Name;
+            }
         }
     }
 }

@@ -36,7 +36,7 @@
             // 
             this.buttonSeleccionarFichero.Location = new System.Drawing.Point(287, 12);
             this.buttonSeleccionarFichero.Name = "buttonSeleccionarFichero";
-            this.buttonSeleccionarFichero.Size = new System.Drawing.Size(131, 36);
+            this.buttonSeleccionarFichero.Size = new System.Drawing.Size(131, 20);
             this.buttonSeleccionarFichero.TabIndex = 0;
             this.buttonSeleccionarFichero.Text = "Seleccionar fichero";
             this.buttonSeleccionarFichero.UseVisualStyleBackColor = true;
