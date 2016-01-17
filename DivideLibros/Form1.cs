@@ -33,7 +33,7 @@ namespace DivideLibros
                 FileInfo fichero = new FileInfo(ofd.FileName);
                 this.textBoxFichero.Text = fichero.Name;
                 gestor.nombreFichero = fichero.FullName;
-   
+
             }
         }
 
@@ -46,7 +46,7 @@ namespace DivideLibros
 
                 foreach (string item in lineasLibro)
                 {
-                
+
 
                     if (prepareToCompareString(item).Equals("PROLOGO"))
                     {
@@ -59,7 +59,7 @@ namespace DivideLibros
                         break;
                     }
                     cont++;
-                    
+
                 }
 
             }
@@ -67,9 +67,9 @@ namespace DivideLibros
             for (int i = 0; i < lineasLibro.Count; i++)
             {
                 string linea = lineasLibro[i];
-                if(int.TryParse(linea.Trim(),out j))
+                if (int.TryParse(linea.Trim(), out j))
                 {
-                    capitulos.Last().lineaFin = i - 1;
+                    if (capitulos.Count != 0) capitulos.Last().lineaFin = i - 1;
                     capitulos.Add(new Capitulo
                     {
                         nombre = linea,
@@ -81,6 +81,26 @@ namespace DivideLibros
 
             }
 
+
+            if (checkBoxEpilogo.Checked)
+            {
+                for (int i = capitulos.Last().lineaInicio; i < lineasLibro.Count; i++)
+                {
+                    if (prepareToCompareString(lineasLibro[i]).Equals("EPILOGO"))
+                    {
+                        if (capitulos.Count != 0) capitulos.Last().lineaFin = i - 1;
+                        capitulos.Add(new Capitulo
+                        {
+                            nombre = "EPILOGO",
+                            lineaInicio = i,
+                            lineaFin = lineasLibro.Count
+                        });
+                        break;
+                    }
+                }
+            }
+
+            if (capitulos.Last().lineaFin == 0) capitulos.Last().lineaFin = lineasLibro.Count;
             this.listBox1.DataSource = capitulos.Select(k => k.nombre).ToList();
         }
 
@@ -103,5 +123,12 @@ namespace DivideLibros
             return s;
         }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            foreach (Capitulo item in capitulos)
+            {
+                gestor.agregar(item.nombre, lineasLibro.GetRange(item.lineaInicio, (item.lineaFin - item.lineaInicio)));
+            }
+        }
     }
 }

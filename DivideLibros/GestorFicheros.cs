@@ -43,5 +43,33 @@ namespace DivideLibros
             }
             return null;
         }
+
+
+        public void agregar(string nombrefichero, string texto)
+        {
+            fich = new FileStream(nombrefichero, FileMode.Append, FileAccess.Write);
+            if (File.Exists(nombrefichero))
+            {
+                if (!String.IsNullOrEmpty(texto))
+                {
+                    StreamWriter escritor = new StreamWriter(fich, Encoding.Default);
+                    escritor.WriteLine(texto);
+                    escritor.Close();
+                }
+            }
+        }
+        public void agregar(string nombrefichero, List<string> lineas)
+        {
+            fich = new FileStream(nombrefichero, FileMode.Append, FileAccess.Write);
+            if (File.Exists(nombrefichero))
+            {
+                StreamWriter escritor = new StreamWriter(fich, Encoding.Default);
+                foreach (string item in lineas)
+                {
+                    escritor.WriteLine(item);
+                }
+                escritor.Close();
+            }
+        }
     }
 }
