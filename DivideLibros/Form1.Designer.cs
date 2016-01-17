@@ -30,6 +30,10 @@
         {
             this.buttonSeleccionarFichero = new System.Windows.Forms.Button();
             this.textBoxFichero = new System.Windows.Forms.TextBox();
+            this.buttonDetectarCapitulos = new System.Windows.Forms.Button();
+            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.checkBoxPrologo = new System.Windows.Forms.CheckBox();
+            this.checkBoxEpilogo = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // buttonSeleccionarFichero
@@ -49,11 +53,53 @@
             this.textBoxFichero.Size = new System.Drawing.Size(269, 20);
             this.textBoxFichero.TabIndex = 1;
             // 
+            // buttonDetectarCapitulos
+            // 
+            this.buttonDetectarCapitulos.Location = new System.Drawing.Point(12, 77);
+            this.buttonDetectarCapitulos.Name = "buttonDetectarCapitulos";
+            this.buttonDetectarCapitulos.Size = new System.Drawing.Size(159, 23);
+            this.buttonDetectarCapitulos.TabIndex = 2;
+            this.buttonDetectarCapitulos.Text = "Detectar Capitulos";
+            this.buttonDetectarCapitulos.UseVisualStyleBackColor = true;
+            this.buttonDetectarCapitulos.Click += new System.EventHandler(this.buttonDetectarCapitulos_Click);
+            // 
+            // listBox1
+            // 
+            this.listBox1.FormattingEnabled = true;
+            this.listBox1.Location = new System.Drawing.Point(177, 77);
+            this.listBox1.Name = "listBox1";
+            this.listBox1.Size = new System.Drawing.Size(241, 251);
+            this.listBox1.TabIndex = 3;
+            // 
+            // checkBoxPrologo
+            // 
+            this.checkBoxPrologo.AutoSize = true;
+            this.checkBoxPrologo.Location = new System.Drawing.Point(12, 106);
+            this.checkBoxPrologo.Name = "checkBoxPrologo";
+            this.checkBoxPrologo.Size = new System.Drawing.Size(62, 17);
+            this.checkBoxPrologo.TabIndex = 4;
+            this.checkBoxPrologo.Text = "Prologo";
+            this.checkBoxPrologo.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxEpilogo
+            // 
+            this.checkBoxEpilogo.AutoSize = true;
+            this.checkBoxEpilogo.Location = new System.Drawing.Point(110, 106);
+            this.checkBoxEpilogo.Name = "checkBoxEpilogo";
+            this.checkBoxEpilogo.Size = new System.Drawing.Size(61, 17);
+            this.checkBoxEpilogo.TabIndex = 5;
+            this.checkBoxEpilogo.Text = "Epilogo";
+            this.checkBoxEpilogo.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(430, 359);
+            this.Controls.Add(this.checkBoxEpilogo);
+            this.Controls.Add(this.checkBoxPrologo);
+            this.Controls.Add(this.listBox1);
+            this.Controls.Add(this.buttonDetectarCapitulos);
             this.Controls.Add(this.textBoxFichero);
             this.Controls.Add(this.buttonSeleccionarFichero);
             this.Name = "Form1";
@@ -67,6 +113,10 @@
 
         private System.Windows.Forms.Button buttonSeleccionarFichero;
         private System.Windows.Forms.TextBox textBoxFichero;
+        private System.Windows.Forms.Button buttonDetectarCapitulos;
+        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.CheckBox checkBoxPrologo;
+        private System.Windows.Forms.CheckBox checkBoxEpilogo;
     }
 }
 
