@@ -35,6 +35,8 @@
             this.checkBoxPrologo = new System.Windows.Forms.CheckBox();
             this.checkBoxEpilogo = new System.Windows.Forms.CheckBox();
             this.button1 = new System.Windows.Forms.Button();
+            this.textBoxPrefijo = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // buttonSeleccionarFichero
@@ -102,11 +104,30 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // textBoxPrefijo
+            // 
+            this.textBoxPrefijo.Location = new System.Drawing.Point(12, 159);
+            this.textBoxPrefijo.Name = "textBoxPrefijo";
+            this.textBoxPrefijo.Size = new System.Drawing.Size(155, 20);
+            this.textBoxPrefijo.TabIndex = 7;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(9, 143);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(39, 13);
+            this.label1.TabIndex = 8;
+            this.label1.Text = "Prefijo:";
+            this.label1.Click += new System.EventHandler(this.label1_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(430, 359);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.textBoxPrefijo);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.checkBoxEpilogo);
             this.Controls.Add(this.checkBoxPrologo);
@@ -130,6 +151,8 @@
         private System.Windows.Forms.CheckBox checkBoxPrologo;
         private System.Windows.Forms.CheckBox checkBoxEpilogo;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.TextBox textBoxPrefijo;
+        private System.Windows.Forms.Label label1;
     }
 }
 

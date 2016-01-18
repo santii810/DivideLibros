@@ -25,6 +25,26 @@ namespace DivideLibros
             InitializeComponent();
         }
 
+        #region Clases privadas
+
+        private string prepareToCompareString(string s)
+        {
+            Regex replace_a_Accents = new Regex("[á|à|ä|â]", RegexOptions.Compiled);
+            Regex replace_e_Accents = new Regex("[é|è|ë|ê]", RegexOptions.Compiled);
+            Regex replace_i_Accents = new Regex("[í|ì|ï|î]", RegexOptions.Compiled);
+            Regex replace_o_Accents = new Regex("[ó|ò|ö|ô]", RegexOptions.Compiled);
+            Regex replace_u_Accents = new Regex("[ú|ù|ü|û]", RegexOptions.Compiled);
+            s = replace_a_Accents.Replace(s, "a");
+            s = replace_e_Accents.Replace(s, "e");
+            s = replace_i_Accents.Replace(s, "i");
+            s = replace_o_Accents.Replace(s, "o");
+            s = replace_u_Accents.Replace(s, "u");
+            s = s.ToUpper().Replace(" ", "");
+            return s;
+        }
+        #endregion
+
+        #region listeners
         private void buttonSeleccionarFichero_Click(object sender, EventArgs e)
         {
             OpenFileDialog ofd = new OpenFileDialog();
@@ -37,7 +57,10 @@ namespace DivideLibros
 
             }
         }
+        
 
+
+        
         private void buttonDetectarCapitulos_Click(object sender, EventArgs e)
         {
             lineasLibro = gestor.leerLineas();
@@ -84,7 +107,7 @@ namespace DivideLibros
                         if (capitulos.Count != 0) capitulos.Last().lineaFin = i - 1;
                         capitulos.Add(new Capitulo
                         {
-                            nombre = capitulos.Count + "EPILOGO",
+                            nombre = capitulos.Count + "_EPILOGO",
                             lineaInicio = i,
                             lineaFin = lineasLibro.Count
                         });
@@ -100,29 +123,23 @@ namespace DivideLibros
 
 
 
-        private string prepareToCompareString(string s)
-        {
-            Regex replace_a_Accents = new Regex("[á|à|ä|â]", RegexOptions.Compiled);
-            Regex replace_e_Accents = new Regex("[é|è|ë|ê]", RegexOptions.Compiled);
-            Regex replace_i_Accents = new Regex("[í|ì|ï|î]", RegexOptions.Compiled);
-            Regex replace_o_Accents = new Regex("[ó|ò|ö|ô]", RegexOptions.Compiled);
-            Regex replace_u_Accents = new Regex("[ú|ù|ü|û]", RegexOptions.Compiled);
-            s = replace_a_Accents.Replace(s, "a");
-            s = replace_e_Accents.Replace(s, "e");
-            s = replace_i_Accents.Replace(s, "i");
-            s = replace_o_Accents.Replace(s, "o");
-            s = replace_u_Accents.Replace(s, "u");
-            s = s.ToUpper().Replace(" ", "");
-            return s;
-        }
 
         private void button1_Click(object sender, EventArgs e)
         {
+            Directory.CreateDirectory(fichero.Directory + @"\capitulos_" + fichero.Name);
+            string directorio = fichero.Directory + @"\capitulos_" + fichero.Name + @"\";
+            string prefijo = textBoxPrefijo.Text;
             foreach (Capitulo item in capitulos)
             {
-                gestor.agregar(fichero.Directory+"\\"+ item.nombre+".txt", lineasLibro.GetRange(item.lineaInicio, (item.lineaFin - item.lineaInicio)));
+                gestor.agregar(directorio + prefijo +"_" +item.nombre+".txt", lineasLibro.GetRange(item.lineaInicio, (item.lineaFin - item.lineaInicio)));
             }
             MessageBox.Show("Ficheros generados");
         }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+        #endregion
     }
 }
