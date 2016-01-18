@@ -18,7 +18,10 @@ namespace DivideLibros
         GestorFicheros gestor = new GestorFicheros();
         List<string> lineasLibro = new List<string>();
         List<Capitulo> capitulos = new List<Capitulo>();
+<<<<<<< HEAD
         FileInfo fichero;
+=======
+>>>>>>> origin/master
 
         public Form1()
         {
@@ -31,7 +34,11 @@ namespace DivideLibros
             ofd.ShowDialog();
             if (!String.IsNullOrEmpty(ofd.FileName))
             {
+<<<<<<< HEAD
                 fichero = new FileInfo(ofd.FileName);
+=======
+                FileInfo fichero = new FileInfo(ofd.FileName);
+>>>>>>> origin/master
                 this.textBoxFichero.Text = fichero.Name;
                 gestor.nombreFichero = fichero.FullName;
 
@@ -128,7 +135,11 @@ namespace DivideLibros
         {
             foreach (Capitulo item in capitulos)
             {
+<<<<<<< HEAD
                 gestor.agregar(fichero.Directory +"\\"+ item.nombre + ".txt", lineasLibro.GetRange(item.lineaInicio, (item.lineaFin - item.lineaInicio)));
+=======
+                gestor.agregar(item.nombre, lineasLibro.GetRange(item.lineaInicio, (item.lineaFin - item.lineaInicio)));
+>>>>>>> origin/master
             }
         }
     }
