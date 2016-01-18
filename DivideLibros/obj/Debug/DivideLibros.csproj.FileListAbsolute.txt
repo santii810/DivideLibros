@@ -16,3 +16,4 @@ C:\Users\dam209\Repositorios\DivideLibros\DivideLibros\obj\Debug\DivideLibros.cs
 C:\Users\dam209\Repositorios\DivideLibros\DivideLibros\obj\Debug\DivideLibros.Form1.resources
 C:\Users\dam209\Repositorios\DivideLibros\DivideLibros\obj\Debug\DivideLibros.Properties.Resources.resources
 C:\Users\dam209\Repositorios\DivideLibros\DivideLibros\obj\Debug\DivideLibros.csproj.GenerateResource.Cache
+C:\Users\dam209\Repositorios\DivideLibros\DivideLibros\obj\Debug\DivideLibros.Texto.resources

@@ -42,81 +42,80 @@ namespace DivideLibros
             s = s.ToUpper().Replace(" ", "");
             return s;
         }
+
+        private void reset()
+        {
+            lineasLibro.Clear();
+            capitulos.Clear();
+            //listBox1.Items.Clear();
+        }
+
+        private bool buscarPrologo()
+        {
+            for (int i = 0; i < lineasLibro.Count; i++)
+            {
+                if (prepareToCompareString(lineasLibro[i]).Equals("PROLOGO"))
+                {
+                    lineasLibro.RemoveRange(0, i - 1);
+                    capitulos.Add(new Capitulo { nombre = "00_PROLOGO", lineaInicio = 0 });
+                    return true;
+                }
+            }
+            return false;
+        }
+        private void buscarCapitulos(bool prologo)
+        {
+            for (int i = 0; i < lineasLibro.Count; i++)
+            {
+                int capi;
+                if (int.TryParse(lineasLibro[i], out capi))
+                {
+                    if (prologo) capitulos.Last().lineaFin = i - 1;
+                    if (capi < 10) capitulos.Add(new Capitulo { nombre = "0" + lineasLibro[i], lineaInicio = i });
+                    else capitulos.Add(new Capitulo { nombre = lineasLibro[i], lineaInicio = i });
+                }
+            }
+        }
+        private bool buscarEpilogo()
+        {
+            for (int i = capitulos.Last().lineaInicio; i < lineasLibro.Count; i++)
+            {
+                if (prepareToCompareString(lineasLibro[i]).Equals("EPILOGO"))
+                {
+                    if (capitulos.Count != 0) capitulos.Last().lineaFin = i - 1;
+                    capitulos.Add(new Capitulo { nombre = capitulos.Count + "_EPILOGO", lineaInicio = i, lineaFin = lineasLibro.Count });
+                    return true;
+                }
+            }
+            return false;
+        }
+
         #endregion
 
         #region listeners
         private void buttonSeleccionarFichero_Click(object sender, EventArgs e)
         {
+            reset();
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.ShowDialog();
             if (!String.IsNullOrEmpty(ofd.FileName))
             {
-                 fichero = new FileInfo(ofd.FileName);
+                fichero = new FileInfo(ofd.FileName);
                 this.textBoxFichero.Text = fichero.Name;
                 gestor.nombreFichero = fichero.FullName;
 
             }
         }
-        
-
-
-        
+               
         private void buttonDetectarCapitulos_Click(object sender, EventArgs e)
         {
+            //leer todas las lineas del fichero
             lineasLibro = gestor.leerLineas();
-            if (checkBoxPrologo.Checked)
-            {
-                int cont = 0;
 
-                foreach (string item in lineasLibro)
-                {
-
-
-                    if (prepareToCompareString(item).Equals("PROLOGO"))
-                    {
-                        lineasLibro.RemoveRange(0, cont - 1);
-                        capitulos.Add(new Capitulo
-                        {
-                            nombre = "00_PROLOGO",
-                            lineaInicio = 0
-                        });
-                        break;
-                    }
-                    cont++;
-
-                }
-
-            }
-            int j;
-            for (int i = 0; i < lineasLibro.Count; i++)
-            {
-                string linea = lineasLibro[i];
-                if (int.TryParse(linea.Trim(), out j))
-                {
-                    if (capitulos.Count != 0) capitulos.Last().lineaFin = i - 1;
-                    if (j < 10) capitulos.Add(new Capitulo { nombre = "0" + linea, lineaInicio = i });
-                    else capitulos.Add(new Capitulo { nombre = linea, lineaInicio = i });
-                }
-            }
-            if (checkBoxEpilogo.Checked)
-            {
-                for (int i = capitulos.Last().lineaInicio; i < lineasLibro.Count; i++)
-                {
-                    if (prepareToCompareString(lineasLibro[i]).Equals("EPILOGO"))
-                    {
-                        if (capitulos.Count != 0) capitulos.Last().lineaFin = i - 1;
-                        capitulos.Add(new Capitulo
-                        {
-                            nombre = capitulos.Count + "_EPILOGO",
-                            lineaInicio = i,
-                            lineaFin = lineasLibro.Count
-                        });
-                        break;
-                    }
-                }
-            }
-
-            if (capitulos.Last().lineaFin == 0) capitulos.Last().lineaFin = lineasLibro.Count;
+            bool hayPrologo = buscarPrologo();
+            buscarCapitulos(hayPrologo);
+            if (!buscarEpilogo())
+                capitulos.Last().lineaFin = lineasLibro.Count;
             this.listBox1.DataSource = capitulos.Select(k => k.nombre).ToList();
         }
 
@@ -131,14 +130,17 @@ namespace DivideLibros
             string prefijo = textBoxPrefijo.Text;
             foreach (Capitulo item in capitulos)
             {
-                gestor.agregar(directorio + prefijo +"_" +item.nombre+".txt", lineasLibro.GetRange(item.lineaInicio, (item.lineaFin - item.lineaInicio)));
+                gestor.agregar(directorio + prefijo + "_" + item.nombre + ".txt", lineasLibro.GetRange(item.lineaInicio, (item.lineaFin - item.lineaInicio)));
             }
             MessageBox.Show("Ficheros generados");
         }
 
-        private void label1_Click(object sender, EventArgs e)
-        {
 
+        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            List<string> lineasMostrar = lineasLibro.GetRange(capitulos[listBox1.SelectedIndex].lineaInicio, (capitulos[listBox1.SelectedIndex].lineaFin - capitulos[listBox1.SelectedIndex].lineaInicio));
+            Texto form = new Texto(lineasMostrar);
+            form.Show();
         }
         #endregion
     }

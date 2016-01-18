@@ -32,8 +32,6 @@
             this.textBoxFichero = new System.Windows.Forms.TextBox();
             this.buttonDetectarCapitulos = new System.Windows.Forms.Button();
             this.listBox1 = new System.Windows.Forms.ListBox();
-            this.checkBoxPrologo = new System.Windows.Forms.CheckBox();
-            this.checkBoxEpilogo = new System.Windows.Forms.CheckBox();
             this.button1 = new System.Windows.Forms.Button();
             this.textBoxPrefijo = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -73,26 +71,7 @@
             this.listBox1.Name = "listBox1";
             this.listBox1.Size = new System.Drawing.Size(241, 251);
             this.listBox1.TabIndex = 3;
-            // 
-            // checkBoxPrologo
-            // 
-            this.checkBoxPrologo.AutoSize = true;
-            this.checkBoxPrologo.Location = new System.Drawing.Point(12, 106);
-            this.checkBoxPrologo.Name = "checkBoxPrologo";
-            this.checkBoxPrologo.Size = new System.Drawing.Size(62, 17);
-            this.checkBoxPrologo.TabIndex = 4;
-            this.checkBoxPrologo.Text = "Prologo";
-            this.checkBoxPrologo.UseVisualStyleBackColor = true;
-            // 
-            // checkBoxEpilogo
-            // 
-            this.checkBoxEpilogo.AutoSize = true;
-            this.checkBoxEpilogo.Location = new System.Drawing.Point(110, 106);
-            this.checkBoxEpilogo.Name = "checkBoxEpilogo";
-            this.checkBoxEpilogo.Size = new System.Drawing.Size(61, 17);
-            this.checkBoxEpilogo.TabIndex = 5;
-            this.checkBoxEpilogo.Text = "Epilogo";
-            this.checkBoxEpilogo.UseVisualStyleBackColor = true;
+            this.listBox1.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
             // 
             // button1
             // 
@@ -119,7 +98,6 @@
             this.label1.Size = new System.Drawing.Size(39, 13);
             this.label1.TabIndex = 8;
             this.label1.Text = "Prefijo:";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // Form1
             // 
@@ -129,8 +107,6 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.textBoxPrefijo);
             this.Controls.Add(this.button1);
-            this.Controls.Add(this.checkBoxEpilogo);
-            this.Controls.Add(this.checkBoxPrologo);
             this.Controls.Add(this.listBox1);
             this.Controls.Add(this.buttonDetectarCapitulos);
             this.Controls.Add(this.textBoxFichero);
@@ -148,8 +124,6 @@
         private System.Windows.Forms.TextBox textBoxFichero;
         private System.Windows.Forms.Button buttonDetectarCapitulos;
         private System.Windows.Forms.ListBox listBox1;
-        private System.Windows.Forms.CheckBox checkBoxPrologo;
-        private System.Windows.Forms.CheckBox checkBoxEpilogo;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.TextBox textBoxPrefijo;
         private System.Windows.Forms.Label label1;
