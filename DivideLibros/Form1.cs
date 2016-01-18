@@ -70,7 +70,7 @@ namespace DivideLibros
                 int capi;
                 if (int.TryParse(lineasLibro[i], out capi))
                 {
-                    if (prologo) capitulos.Last().lineaFin = i - 1;
+                   if(capitulos.Count!=0) capitulos.Last().lineaFin = i - 1;
                     if (capi < 10) capitulos.Add(new Capitulo { nombre = "0" + lineasLibro[i], lineaInicio = i });
                     else capitulos.Add(new Capitulo { nombre = lineasLibro[i], lineaInicio = i });
                 }
@@ -136,11 +136,14 @@ namespace DivideLibros
         }
 
 
-        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+
+        
+
+        private void listBox1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            List<string> lineasMostrar = lineasLibro.GetRange(capitulos[listBox1.SelectedIndex].lineaInicio, (capitulos[listBox1.SelectedIndex].lineaFin - capitulos[listBox1.SelectedIndex].lineaInicio));
-            Texto form = new Texto(lineasMostrar);
-            form.Show();
+             List<string> lineasMostrar = lineasLibro.GetRange(capitulos[listBox1.SelectedIndex].lineaInicio, (capitulos[listBox1.SelectedIndex].lineaFin - capitulos[listBox1.SelectedIndex].lineaInicio));
+                Texto form = new Texto(lineasMostrar);
+                form.Show();
         }
         #endregion
     }
