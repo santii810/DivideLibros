@@ -18,15 +18,20 @@ namespace DivideLibros
         GestorFicheros gestor = new GestorFicheros();
         List<string> lineasLibro = new List<string>();
         List<Capitulo> capitulos = new List<Capitulo>();
+        List<TipoDeteccion> detecciones = new List<TipoDeteccion>();
         FileInfo fichero;
 
         public Form1()
         {
             InitializeComponent();
+            detecciones = Repositorios.getTipoDetecciones();
+            foreach (TipoDeteccion item in detecciones)
+            {
+                comboBox1.Items.Add(item.nombre);
+            }
         }
 
         #region Clases privadas
-
         private string prepareToCompareString(string s)
         {
             Regex replace_a_Accents = new Regex("[á|à|ä|â]", RegexOptions.Compiled);
@@ -70,7 +75,7 @@ namespace DivideLibros
                 int capi;
                 if (int.TryParse(lineasLibro[i], out capi))
                 {
-                   if(capitulos.Count!=0) capitulos.Last().lineaFin = i - 1;
+                    if (capitulos.Count != 0) capitulos.Last().lineaFin = i - 1;
                     if (capi < 10) capitulos.Add(new Capitulo { nombre = "0" + lineasLibro[i], lineaInicio = i });
                     else capitulos.Add(new Capitulo { nombre = lineasLibro[i], lineaInicio = i });
                 }
@@ -103,15 +108,14 @@ namespace DivideLibros
                 fichero = new FileInfo(ofd.FileName);
                 this.textBoxFichero.Text = fichero.Name;
                 gestor.nombreFichero = fichero.FullName;
+                //leer todas las lineas del fichero
+                lineasLibro = gestor.leerLineas();
 
             }
         }
-               
+
         private void buttonDetectarCapitulos_Click(object sender, EventArgs e)
         {
-            //leer todas las lineas del fichero
-            lineasLibro = gestor.leerLineas();
-
             bool hayPrologo = buscarPrologo();
             buscarCapitulos(hayPrologo);
             if (!buscarEpilogo())
@@ -133,17 +137,18 @@ namespace DivideLibros
                 gestor.agregar(directorio + prefijo + "_" + item.nombre + ".txt", lineasLibro.GetRange(item.lineaInicio, (item.lineaFin - item.lineaInicio)));
             }
             MessageBox.Show("Ficheros generados");
+
         }
 
 
 
-        
+
 
         private void listBox1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-             List<string> lineasMostrar = lineasLibro.GetRange(capitulos[listBox1.SelectedIndex].lineaInicio, (capitulos[listBox1.SelectedIndex].lineaFin - capitulos[listBox1.SelectedIndex].lineaInicio));
-                Texto form = new Texto(lineasMostrar);
-                form.Show();
+            List<string> lineasMostrar = lineasLibro.GetRange(capitulos[listBox1.SelectedIndex].lineaInicio, (capitulos[listBox1.SelectedIndex].lineaFin - capitulos[listBox1.SelectedIndex].lineaInicio));
+            Texto form = new Texto(lineasMostrar);
+            form.Show();
         }
         #endregion
     }
