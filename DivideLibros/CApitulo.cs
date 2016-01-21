@@ -15,6 +15,7 @@ namespace DivideLibros
 
     class TipoDeteccion
     {
+        public int id { get; set; }
         public string nombre { get; set; }
         public string descripcion { get; set; }
     }
@@ -24,8 +25,12 @@ namespace DivideLibros
         static public List<TipoDeteccion> getTipoDetecciones()
         {
             List<TipoDeteccion> retorno = new List<TipoDeteccion>();
-            retorno.Add(new TipoDeteccion { nombre = "PROLOGO + Solo numeros",
-                descripcion = "Esta detecta el progolo y el epilogo si estan situados en el inicio y el final respectivamente. Por otro lado detectara como capitulos las lineas que tengan solamente un  numero."});
+            retorno.Add(new TipoDeteccion
+            {
+                id = 1,
+                nombre = "PROLOGO + Solo numeros",
+                descripcion = "Esta detecta el progolo y el epilogo si estan situados en el inicio y el final respectivamente. Por otro lado detectara como capitulos las lineas que tengan solamente un  numero."
+            });
             return retorno;
         }
     }

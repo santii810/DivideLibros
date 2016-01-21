@@ -20,6 +20,7 @@ namespace DivideLibros
         List<Capitulo> capitulos = new List<Capitulo>();
         List<TipoDeteccion> detecciones = new List<TipoDeteccion>();
         FileInfo fichero;
+        TipoDeteccion tipoDeteccion = new TipoDeteccion();
         #endregion
 
         public Form1()
@@ -117,16 +118,28 @@ namespace DivideLibros
 
         private void buttonDetectarCapitulos_Click(object sender, EventArgs e)
         {
-            bool hayPrologo = buscarPrologo();
-            buscarCapitulos(hayPrologo);
-            if (!buscarEpilogo())
-                capitulos.Last().lineaFin = lineasLibro.Count;
-            this.listBox1.DataSource = capitulos.Select(k => k.nombre).ToList();
+            if (!String.IsNullOrEmpty(textBoxFichero.Text))
+            {
+                switch (tipoDeteccion.id)
+                {
+                    case 1:
+                        bool hayPrologo = buscarPrologo();
+                        buscarCapitulos(hayPrologo);
+                        if (!buscarEpilogo())
+                            capitulos.Last().lineaFin = lineasLibro.Count;
+                        this.listBox1.DataSource = capitulos.Select(k => k.nombre).ToList();
+                        break;
+                    default:
+                        MessageBox.Show("Debes elegir un tipo de deteccion");
+                        break;
+                }
+            }
+            else
+            {
+                MessageBox.Show("Debes seleccionar un fichero");
+            }
+            
         }
-
-
-
-
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -141,21 +154,27 @@ namespace DivideLibros
 
         }
 
-
-
-
-
         private void listBox1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             List<string> lineasMostrar = lineasLibro.GetRange(capitulos[listBox1.SelectedIndex].lineaInicio, (capitulos[listBox1.SelectedIndex].lineaFin - capitulos[listBox1.SelectedIndex].lineaInicio));
             Texto form = new Texto(lineasMostrar);
             form.Show();
         }
-        #endregion
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string a = comboBox1.SelectedItem.ToString();
+            //Rellena el tipo de deteccion
+            foreach (TipoDeteccion item in detecciones)
+            {
+                if (item.nombre.Equals(comboBox1.SelectedItem.ToString()))
+                {
+                    tipoDeteccion = item;
+                }
+            }
         }
+
+
+        #endregion
+
     }
 }
