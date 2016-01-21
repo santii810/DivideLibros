@@ -14,12 +14,13 @@ namespace DivideLibros
 {
     public partial class Form1 : Form
     {
-
+        #region variables globales
         GestorFicheros gestor = new GestorFicheros();
         List<string> lineasLibro = new List<string>();
         List<Capitulo> capitulos = new List<Capitulo>();
         List<TipoDeteccion> detecciones = new List<TipoDeteccion>();
         FileInfo fichero;
+        #endregion
 
         public Form1()
         {
@@ -151,5 +152,10 @@ namespace DivideLibros
             form.Show();
         }
         #endregion
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string a = comboBox1.SelectedItem.ToString();
+        }
     }
 }
