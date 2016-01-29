@@ -54,7 +54,12 @@ namespace DivideLibros
         {
             lineasLibro.Clear();
             capitulos.Clear();
-            //listBox1.Items.Clear();
+            listBox1.Items.Clear();
+        }
+        private void resetCapitulos()
+        {
+            capitulos.Clear();
+            listBox1.Items.Clear();
         }
 
         private bool buscarPrologo()
@@ -120,6 +125,7 @@ namespace DivideLibros
         {
             if (!String.IsNullOrEmpty(textBoxFichero.Text))
             {
+                resetCapitulos();
                 switch (tipoDeteccion.id)
                 {
                     case 1:
@@ -127,12 +133,18 @@ namespace DivideLibros
                         buscarCapitulos(hayPrologo);
                         if (!buscarEpilogo())
                             capitulos.Last().lineaFin = lineasLibro.Count;
-                        this.listBox1.DataSource = capitulos.Select(k => k.nombre).ToList();
+                        foreach (Capitulo item in capitulos)
+                        {
+                            listBox1.Items.Add(item.nombre);
+                        }
                         break;
                     default:
                         MessageBox.Show("Debes elegir un tipo de deteccion");
                         break;
                 }
+
+
+
             }
             else
             {

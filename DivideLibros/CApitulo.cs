@@ -29,8 +29,11 @@ namespace DivideLibros
             {
                 id = 1,
                 nombre = "PROLOGO + Solo numeros",
-                descripcion = "Esta detecta el progolo y el epilogo si estan situados en el inicio y el final respectivamente. Por otro lado detectara como capitulos las lineas que tengan solamente un  numero."
+                descripcion = "Esta detecta el progolo y el epilogo si estan situados en el inicio y el final respectivamente. "+
+                "Por otro lado detectara como capitulos las lineas que tengan solamente un  numero."+
+                "Las lineas anteriores a la deteccion del prologo quedaran descartadas."
             });
+
             return retorno;
         }
     }
