@@ -123,10 +123,6 @@ namespace DivideLibros
             this.listBox1.DataSource = capitulos.Select(k => k.nombre).ToList();
         }
 
-
-
-
-
         private void button1_Click(object sender, EventArgs e)
         {
             Directory.CreateDirectory(fichero.Directory + @"\capitulos_" + fichero.Name);
@@ -140,13 +136,10 @@ namespace DivideLibros
 
         }
 
-
-
-
-
         private void listBox1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            List<string> lineasMostrar = lineasLibro.GetRange(capitulos[listBox1.SelectedIndex].lineaInicio, (capitulos[listBox1.SelectedIndex].lineaFin - capitulos[listBox1.SelectedIndex].lineaInicio));
+            List<string> lineasMostrar = lineasLibro.GetRange(capitulos[listBox1.SelectedIndex].lineaInicio,
+                (capitulos[listBox1.SelectedIndex].lineaFin - capitulos[listBox1.SelectedIndex].lineaInicio));
             Texto form = new Texto(lineasMostrar);
             form.Show();
         }
