@@ -75,7 +75,7 @@ namespace DivideLibros
             }
             return false;
         }
-        private void buscarCapitulos(bool prologo)
+        private void buscarCapitulosMetodo1(bool prologo)
         {
             for (int i = 0; i < lineasLibro.Count; i++)
             {
@@ -85,6 +85,19 @@ namespace DivideLibros
                     if (capitulos.Count != 0) capitulos.Last().lineaFin = i - 1;
                     if (capi < 10) capitulos.Add(new Capitulo { nombre = "0" + lineasLibro[i], lineaInicio = i });
                     else capitulos.Add(new Capitulo { nombre = lineasLibro[i], lineaInicio = i });
+                }
+            }
+        }
+        private void buscarCapitulosMetodo2()
+        {
+            for (int i = 0; i < lineasLibro.Count; i++)
+            {
+                int capi;
+                string[] splitLinea =  lineasLibro[i].Split(' ');
+                if (splitLinea.Length == 3 && int.TryParse(splitLinea[1], out capi))
+                {
+                    if (capitulos.Count != 0) capitulos.Last().lineaFin = i - 1;
+                    capitulos.Add(new Capitulo { nombre = lineasLibro[i], lineaInicio = i });
                 }
             }
         }
@@ -130,9 +143,17 @@ namespace DivideLibros
                 {
                     case 1:
                         bool hayPrologo = buscarPrologo();
-                        buscarCapitulos(hayPrologo);
+                        buscarCapitulosMetodo1(hayPrologo);
                         if (!buscarEpilogo())
                             capitulos.Last().lineaFin = lineasLibro.Count;
+                        foreach (Capitulo item in capitulos)
+                        {
+                            listBox1.Items.Add(item.nombre);
+                        }
+                        break;
+                    case 2:
+                        buscarCapitulosMetodo2();
+                        capitulos.Last().lineaFin = lineasLibro.Count;
                         foreach (Capitulo item in capitulos)
                         {
                             listBox1.Items.Add(item.nombre);

@@ -35,7 +35,7 @@ namespace DivideLibros
             if (abrirFichero(nombreFichero))
             {
                 List<string> retorno = new List<string>();
-                StreamReader lector = new StreamReader(fich, Encoding.ASCII, true);
+                StreamReader lector = new StreamReader(fich, Encoding.Default, true);
                 while (!lector.EndOfStream)
                     retorno.Add(lector.ReadLine());
                 lector.Close();
