@@ -68,7 +68,7 @@ namespace DivideLibros
             }
             return false;
         }
-        private void buscarCapitulos(bool prologo)
+        private void buscarCapitulos1(bool prologo)
         {
             for (int i = 0; i < lineasLibro.Count; i++)
             {
