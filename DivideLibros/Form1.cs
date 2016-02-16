@@ -81,6 +81,19 @@ namespace DivideLibros
                 }
             }
         }
+        private void buscarCapitulos2()
+        {
+            for (int i = 0; i < lineasLibro.Count; i++)
+            {
+                int capi;
+                string[] splitLinea = lineasLibro[i].Trim().Split(' ');
+                if ( splitLinea.Length == 3 && int.TryParse(splitLinea[1], out capi))
+                {
+                    if (capitulos.Count != 0) capitulos.Last().lineaFin = i - 1;
+                   capitulos.Add(new Capitulo { nombre = lineasLibro[i], lineaInicio = i });
+                }
+            }
+        }
         private bool buscarEpilogo()
         {
             for (int i = capitulos.Last().lineaInicio; i < lineasLibro.Count; i++)
@@ -116,10 +129,11 @@ namespace DivideLibros
 
         private void buttonDetectarCapitulos_Click(object sender, EventArgs e)
         {
-            bool hayPrologo = buscarPrologo();
-            buscarCapitulos(hayPrologo);
-            if (!buscarEpilogo())
+            
+            buscarCapitulos2();
+            
                 capitulos.Last().lineaFin = lineasLibro.Count;
+
             this.listBox1.DataSource = capitulos.Select(k => k.nombre).ToList();
         }
 
