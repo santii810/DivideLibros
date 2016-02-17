@@ -14,12 +14,14 @@ namespace DivideLibros
 {
     public partial class Form1 : Form
     {
-
+        #region variables globales
         GestorFicheros gestor = new GestorFicheros();
         List<string> lineasLibro = new List<string>();
         List<Capitulo> capitulos = new List<Capitulo>();
         List<TipoDeteccion> detecciones = new List<TipoDeteccion>();
         FileInfo fichero;
+        TipoDeteccion tipoDeteccion = new TipoDeteccion();
+        #endregion
 
         public Form1()
         {
@@ -52,7 +54,12 @@ namespace DivideLibros
         {
             lineasLibro.Clear();
             capitulos.Clear();
-            //listBox1.Items.Clear();
+            listBox1.Items.Clear();
+        }
+        private void resetCapitulos()
+        {
+            capitulos.Clear();
+            listBox1.Items.Clear();
         }
 
         private bool buscarPrologo()
@@ -68,7 +75,7 @@ namespace DivideLibros
             }
             return false;
         }
-        private void buscarCapitulos1(bool prologo)
+        private void buscarCapitulosMetodo1(bool prologo)
         {
             for (int i = 0; i < lineasLibro.Count; i++)
             {
@@ -81,16 +88,16 @@ namespace DivideLibros
                 }
             }
         }
-        private void buscarCapitulos2()
+        private void buscarCapitulosMetodo2()
         {
             for (int i = 0; i < lineasLibro.Count; i++)
             {
                 int capi;
-                string[] splitLinea = lineasLibro[i].Trim().Split(' ');
-                if ( splitLinea.Length == 3 && int.TryParse(splitLinea[1], out capi))
+                string[] splitLinea = lineasLibro[i].Split(' ');
+                if (splitLinea.Length == 3 && int.TryParse(splitLinea[1], out capi))
                 {
                     if (capitulos.Count != 0) capitulos.Last().lineaFin = i - 1;
-                   capitulos.Add(new Capitulo { nombre = lineasLibro[i], lineaInicio = i });
+                    capitulos.Add(new Capitulo { nombre = lineasLibro[i], lineaInicio = i });
                 }
             }
         }
@@ -129,12 +136,42 @@ namespace DivideLibros
 
         private void buttonDetectarCapitulos_Click(object sender, EventArgs e)
         {
-            
-            buscarCapitulos2();
-            
-                capitulos.Last().lineaFin = lineasLibro.Count;
+            if (!String.IsNullOrEmpty(textBoxFichero.Text))
+            {
+                resetCapitulos();
+                switch (tipoDeteccion.id)
+                {
+                    case 1:
+                        bool hayPrologo = buscarPrologo();
+                        buscarCapitulosMetodo1(hayPrologo);
+                        if (!buscarEpilogo())
+                            capitulos.Last().lineaFin = lineasLibro.Count;
+                        foreach (Capitulo item in capitulos)
+                        {
+                            listBox1.Items.Add(item.nombre);
+                        }
+                        break;
+                    case 2:
+                        buscarCapitulosMetodo2();
+                        capitulos.Last().lineaFin = lineasLibro.Count;
+                        foreach (Capitulo item in capitulos)
+                        {
+                            listBox1.Items.Add(item.nombre);
+                        }
+                        break;
+                    default:
+                        MessageBox.Show("Debes elegir un tipo de deteccion");
+                        break;
+                }
 
-            this.listBox1.DataSource = capitulos.Select(k => k.nombre).ToList();
+
+
+            }
+            else
+            {
+                MessageBox.Show("Debes seleccionar un fichero");
+            }
+
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -152,11 +189,26 @@ namespace DivideLibros
 
         private void listBox1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            List<string> lineasMostrar = lineasLibro.GetRange(capitulos[listBox1.SelectedIndex].lineaInicio,
-                (capitulos[listBox1.SelectedIndex].lineaFin - capitulos[listBox1.SelectedIndex].lineaInicio));
+            List<string> lineasMostrar = lineasLibro.GetRange(capitulos[listBox1.SelectedIndex].lineaInicio, (capitulos[listBox1.SelectedIndex].lineaFin - capitulos[listBox1.SelectedIndex].lineaInicio));
             Texto form = new Texto(lineasMostrar);
             form.Show();
         }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            //Rellena el tipo de deteccion
+            foreach (TipoDeteccion item in detecciones)
+            {
+                if (item.nombre.Equals(comboBox1.SelectedItem.ToString()))
+                {
+                    tipoDeteccion = item;
+                }
+            }
+
+        }
+
+
         #endregion
+
     }
 }
